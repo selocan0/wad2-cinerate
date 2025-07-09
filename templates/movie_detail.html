@@ -14,6 +14,31 @@
         <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster" width="200">
     {% endif %}
 
+    <hr>
+    <h2>Reviews</h2>
+
+    {% for review in reviews %}
+      <div>
+        <p><strong>{{ review.user.username }}</strong> rated it {{ review.rating }}/5</p>
+        <p>{{ review.comment }}</p>
+        <p><em>{{ review.timestamp|date:"d M Y, H:i" }}</em></p>
+        <hr>
+      </div>
+    {% empty %}
+      <p>No reviews yet. Be the first to review!</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+      <h3>Leave a Review</h3>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+      </form>
+    {% else %}
+      <p><a href="{% url 'login' %}">Log in</a> to leave a review.</p>
+    {% endif %}
+
     <p><a href="{% url 'movie_list' %}">Back to list</a></p>
 </body>
 </html>
