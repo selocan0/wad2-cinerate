@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ movie.title }}</title>
+</head>
+<body>
+    <h1>{{ movie.title }}</h1>
+    <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+    <p>{{ movie.genre }}</p>
+    <p>{{ movie.description }}</p>
+
+    {% if movie.poster %}
+        <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster" width="200">
+    {% endif %}
+
+    <p><a href="{% url 'movie_list' %}">Back to list</a></p>
+</body>
+</html>

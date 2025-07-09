@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CineRate - Movie List</title>
+</head>
+<body>
+    <h1>Movie List</h1>
+    {% for movie in movies %}
+    <div>
+        <h2><a href="{% url 'movie_detail' movie.pk %}">{{ movie.title }}</a></h2>
+        <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+        <p>{{ movie.description }}</p>
+
+        {% if movie.poster %}
+            <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster" width="200">
+        {% else %}
+            <p>No image available.</p>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>No movies added yet.</p>
+    {% endfor %}
+</body>
+</html>
