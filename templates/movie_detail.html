@@ -34,12 +34,21 @@
     <h2>Reviews</h2>
 
     {% for review in reviews %}
-      <div>
-        <p><strong>{{ review.user.username }}</strong> rated it {{ review.rating }}/5</p>
-        <p>{{ review.comment }}</p>
-        <p><em>{{ review.timestamp|date:"d M Y, H:i" }}</em></p>
-        <hr>
-      </div>
+    <div>
+      <p><strong>{{ review.user.username }}</strong> rated it {{ review.rating }}/5</p>
+      <p>{{ review.comment }}</p>
+      <p><em>{{ review.timestamp|date:"d M Y, H:i" }}</em></p>
+      
+      {% if review.user == user %}
+        <p>
+          <a href="{% url 'edit_review' review.pk %}">Edit</a> |
+          <a href="{% url 'delete_review' review.pk %}">Delete</a>
+        </p>
+      {% endif %}
+  
+      <hr>
+    </div>
+  
     {% empty %}
       <p>No reviews yet. Be the first to review!</p>
     {% endfor %}
