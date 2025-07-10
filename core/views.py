@@ -4,6 +4,13 @@ from .forms import ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from .models import Movie, Favorite
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def profile(request):
+    favorites = Favorite.objects.filter(user=request.user).select_related('movie')
+    return render(request, 'profile.html', {'favorites': favorites})
+
 
 @login_required
 def toggle_favorite(request, movie_id):
