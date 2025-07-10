@@ -1,69 +1,70 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ movie.title }}</title>
-</head>
-<body>
-    <h1>{{ movie.title }}</h1>
+{% extends "base.html" %}
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4 mb-3">
+    {% if movie.poster %}
+      <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster" class="img-fluid rounded shadow">
+    {% else %}
+      <p class="text-muted">No poster available.</p>
+    {% endif %}
+  </div>
+
+  <div class="col-md-8">
+    <h2>{{ movie.title }}</h2>
     <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
-    <p>{{ movie.genre }}</p>
+    <p><strong>Genre:</strong> {{ movie.genre }}</p>
     <p>{{ movie.description }}</p>
 
     {% if user.is_authenticated %}
-  <form method="post" action="{% url 'toggle_favorite' movie.id %}">
-    {% csrf_token %}
-    <button type="submit">
-        {% if is_favorited %}
-        Remove from Favorites
-      {% else %}
-        Add to Favorites
-      {% endif %}
-    </button>
-  </form>
-{% else %}
-  <p><a href="{% url 'login' %}?next={{ request.path }}">Login</a> to favorite this movie.</p>
-{% endif %}
-
-
-    {% if movie.poster %}
-        <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster" width="200">
-    {% endif %}
-
-    <hr>
-    <h2>Reviews</h2>
-
-    {% for review in reviews %}
-    <div>
-      <p><strong>{{ review.user.username }}</strong> rated it {{ review.rating }}/5</p>
-      <p>{{ review.comment }}</p>
-      <p><em>{{ review.timestamp|date:"d M Y, H:i" }}</em></p>
-      
-      {% if review.user == user %}
-        <p>
-          <a href="{% url 'edit_review' review.pk %}">Edit</a> |
-          <a href="{% url 'delete_review' review.pk %}">Delete</a>
-        </p>
-      {% endif %}
-  
-      <hr>
-    </div>
-  
-    {% empty %}
-      <p>No reviews yet. Be the first to review!</p>
-    {% endfor %}
-
-    {% if user.is_authenticated %}
-      <h3>Leave a Review</h3>
-      <form method="post">
+      <form method="post" action="{% url 'toggle_favorite' movie.id %}" class="my-3">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn {% if is_favorited %}btn-outline-danger{% else %}btn-outline-primary{% endif %}">
+          {% if is_favorited %}Remove from Favorites{% else %}Add to Favorites{% endif %}
+        </button>
       </form>
     {% else %}
-      <p><a href="{% url 'login' %}">Log in</a> to leave a review.</p>
+      <p><a href="{% url 'login' %}?next={{ request.path }}">Login</a> to favorite this movie.</p>
     {% endif %}
+  </div>
+</div>
 
-    <p><a href="{% url 'movie_list' %}">Back to list</a></p>
-</body>
-</html>
+<hr>
+
+<h3>Reviews</h3>
+
+{% for review in reviews %}
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{ review.user.username }} 
+        <small class="text-muted">rated {{ review.rating }}/5</small>
+      </h5>
+      <p class="card-text">{{ review.comment }}</p>
+      <p class="card-text"><small class="text-muted">{{ review.timestamp|date:"d M Y, H:i" }}</small></p>
+
+      {% if review.user == user %}
+        <a href="{% url 'edit_review' review.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+        <a href="{% url 'delete_review' review.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+      {% endif %}
+    </div>
+  </div>
+{% empty %}
+  <p>No reviews yet. Be the first to review!</p>
+{% endfor %}
+
+{% if user.is_authenticated %}
+  <h4 class="mt-4">Leave a Review</h4>
+  <form method="post" class="mb-4">
+    {% csrf_token %}
+    <div class="mb-3">
+      {{ form.as_p }}
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+{% else %}
+  <p><a href="{% url 'login' %}">Log in</a> to leave a review.</p>
+{% endif %}
+
+<a href="{% url 'movie_list' %}" class="btn btn-link mt-3">← Back to list</a>
+{% endblock %}

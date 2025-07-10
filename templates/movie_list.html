@@ -1,25 +1,35 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Movie List{% endblock %}
 
 {% block content %}
-  <h1>Movie List</h1>
+  <h1 class="mb-4 text-center">Browse Movies</h1>
 
   {% if user.is_authenticated %}
-    <p><a href="{% url 'profile' %}">View My Favorites</a></p>
+    <div class="text-end mb-4">
+      <a href="{% url 'profile' %}" class="btn btn-outline-primary">View My Favorites</a>
+    </div>
   {% endif %}
 
-  {% for movie in movies %}
-    <div class="card my-3 p-3">
-      <h2><a href="{% url 'movie_detail' movie.pk %}">{{ movie.title }}</a></h2>
-      <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
-      <p>{{ movie.description }}</p>
-      {% if movie.poster %}
-        <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster" width="200">
-      {% else %}
-        <p>No image available.</p>
-      {% endif %}
-    </div>
-  {% empty %}
-    <p>No movies added yet.</p>
-  {% endfor %}
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for movie in movies %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          {% if movie.poster %}
+            <img src="{{ movie.poster.url }}" class="card-img-top" alt="{{ movie.title }} poster">
+          {% else %}
+            <img src="{% static 'images/default-poster.jpg' %}" class="card-img-top" alt="No image available">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <p class="card-text text-muted"><strong>Release Date:</strong> {{ movie.release_date }}</p>
+            <p class="card-text">{{ movie.description|truncatewords:20 }}</p>
+            <a href="{% url 'movie_detail' movie.pk %}" class="btn btn-primary">View Details</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center">No movies added yet.</p>
+    {% endfor %}
+  </div>
 {% endblock %}

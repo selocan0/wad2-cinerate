@@ -1,24 +1,34 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Your Favorites</title>
-</head>
-<body>
-    <h1>{{ user.username }}'s Favorite Movies</h1>
+{% extends "base.html" %}
+{% block title %}My Favorites{% endblock %}
 
-    {% if favorites %}
-        <ul>
-            {% for favorite in favorites %}
-                <li>
-                    <a href="{% url 'movie_detail' pk=favorite.movie.pk %}">{{ favorite.movie.title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>You haven't added any favorites yet.</p>
-    {% endif %}
+{% block content %}
+<h2>My Favorite Movies</h2>
 
-    <p><a href="{% url 'movie_list' %}">Back to movie list</a></p>
-</body>
-</html>
+{% if favorites %}
+
+  <div class="row">
+    {% for fav in favorites %}
+    {% with movie=fav.movie %}
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          {% if movie.poster %}
+            <img src="{{ movie.poster.url }}" class="card-img-top" alt="{{ movie.title }}">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <p class="card-text">{{ movie.description|truncatewords:15 }}</p>
+            <a href="{% url 'movie_detail' movie.pk %}" class="btn btn-primary">Details</a>
+          </div>
+        </div>
+      </div>
+    {% endwith %}
+  {% empty %}
+    <p>You have no favorite movies yet.</p>
+  {% endfor %}
+  
+  </div>
+{% else %}
+  <p>You have no favorite movies yet.</p>
+{% endif %}
+
+{% endblock %}

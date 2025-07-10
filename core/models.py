@@ -1,5 +1,11 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    favorites = models.ManyToManyField("Movie", blank=True, related_name='favorited_by')
+
+
 
 class Movie(models.Model):
     title = models.CharField(max_length=100)
