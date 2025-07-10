@@ -1,23 +1,56 @@
+
 body {
     background-color: #f8f9fa;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 70px;
 }
 
-.navbar {
-    margin-bottom: 2rem;
-}
-
-.container {
-    max-width: 900px;
-    margin: auto;
-}
-
-.card {
+/* Headings */
+h1, h2, h3, h4 {
+    font-weight: 600;
     margin-bottom: 1rem;
 }
 
-footer {
-    margin-top: 2rem;
-    text-align: center;
-    color: #888;
+/* Cards */
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar tweaks */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.1rem;
+    margin-left: 1rem;
+}
+
+/* Favorite button states */
+.btn-outline-primary,
+.btn-outline-danger {
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+}
+
+/* Review card */
+.card-title {
+    font-size: 1.1rem;
+}
+
+.card-text small {
+    color: #6c757d;
+}
+
+/* Form fields */
+form textarea,
+form input[type="text"],
+form input[type="email"],
+form select {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    width: 100%;
 }
