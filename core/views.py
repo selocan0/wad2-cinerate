@@ -13,13 +13,14 @@ def profile(request):
 
 
 @login_required
-def toggle_favorite(request, movie_id):
-    movie = get_object_or_404(Movie, id=movie_id)
+def toggle_favorite(request, pk):
+    movie = get_object_or_404(Movie, pk=pk)
     favorite, created = Favorite.objects.get_or_create(user=request.user, movie=movie)
 
     if not created:
         favorite.delete()  # Already favorited → remove
-    return redirect('movie_detail', pk=movie.id)
+
+    return redirect('movie_detail', pk=movie.pk)
 
 
 

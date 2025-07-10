@@ -1,32 +1,25 @@
-{% load static %}
+{% extends "base.html" %}
+{% block title %}Movie List{% endblock %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>CineRate - Movie List</title>
-</head>
-<body>
-    <h1>Movie List</h1>
+{% block content %}
+  <h1>Movie List</h1>
 
-    {% if user.is_authenticated %}
+  {% if user.is_authenticated %}
     <p><a href="{% url 'profile' %}">View My Favorites</a></p>
-{% endif %}
+  {% endif %}
 
-
-    {% for movie in movies %}
-    <div>
-        <h2><a href="{% url 'movie_detail' movie.pk %}">{{ movie.title }}</a></h2>
-        <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
-        <p>{{ movie.description }}</p>
-
-        {% if movie.poster %}
-            <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster" width="200">
-        {% else %}
-            <p>No image available.</p>
-        {% endif %}
+  {% for movie in movies %}
+    <div class="card my-3 p-3">
+      <h2><a href="{% url 'movie_detail' movie.pk %}">{{ movie.title }}</a></h2>
+      <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+      <p>{{ movie.description }}</p>
+      {% if movie.poster %}
+        <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster" width="200">
+      {% else %}
+        <p>No image available.</p>
+      {% endif %}
     </div>
-    {% empty %}
+  {% empty %}
     <p>No movies added yet.</p>
-    {% endfor %}
-</body>
-</html>
+  {% endfor %}
+{% endblock %}
