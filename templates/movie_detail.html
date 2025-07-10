@@ -57,11 +57,22 @@
   <h4 class="mt-4">Leave a Review</h4>
   <form method="post" class="mb-4">
     {% csrf_token %}
-    <div class="mb-3">
-      {{ form.as_p }}
-    </div>
+    {% for field in form %}
+      <div class="mb-3">
+        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+          <div class="text-danger small mt-1">
+            {% for error in field.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
     <button type="submit" class="btn btn-success">Submit</button>
   </form>
+  
 {% else %}
   <p><a href="{% url 'login' %}">Log in</a> to leave a review.</p>
 {% endif %}
