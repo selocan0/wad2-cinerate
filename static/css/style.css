@@ -1,56 +1,198 @@
-
+/* Base styles */
 body {
-    background-color: #f8f9fa;
+    background: linear-gradient(to bottom, #1a1a1a, #121212);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding-top: 70px;
+    color: #f1f1f1;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.7rem;
+    color: #ff4e50 !important;
+    text-shadow: 0 0 8px rgba(255, 78, 80, 0.8);
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.1rem;
+    margin-left: 1rem;
+    color: #ccc !important;
+    transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ff4e50 !important;
+}
+
+/* Cards */
+.card {
+    background-color: #1f1f1f;
+    border-radius: 1rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(255, 78, 80, 0.5); /* stronger red glow */
+    border: 1px solid rgba(255, 78, 80, 0.3);        /* subtle border highlight */
 }
 
 /* Headings */
 h1, h2, h3, h4 {
     font-weight: 600;
     margin-bottom: 1rem;
+    color: #ffffff;
 }
 
-/* Cards */
-.card {
-    border-radius: 0.75rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+/* Buttons */
+button, .btn {
+    border-radius: 30px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    font-size: 0.95rem;
 }
 
-/* Navbar tweaks */
-.navbar-brand {
-    font-weight: bold;
-    font-size: 1.4rem;
-}
-
-.navbar-nav .nav-link {
-    font-size: 1.1rem;
-    margin-left: 1rem;
-}
-
-/* Favorite button states */
 .btn-outline-primary,
-.btn-outline-danger {
+.btn-outline-danger,
+.btn-success {
+    border: 2px solid #ff4e50;
+    color: #ff4e50;
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-danger:hover,
+.btn-success:hover {
+    background-color: #ff4e50;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Edit/Delete buttons (links or form buttons) */
+a.btn,
+button.btn {
+    color: #ff4e50 !important;
+    border: 1px solid #ff4e50 !important;
+    background-color: transparent;
+    font-weight: 500;
     border-radius: 20px;
-    padding: 0.4rem 1rem;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.9rem;
+    transition: all 0.2s ease-in-out;
+    display: inline-block;
+    margin: 0.2rem 0.2rem;
 }
 
-/* Review card */
-.card-title {
-    font-size: 1.1rem;
+a.btn:hover,
+button.btn:hover {
+    background-color: #ff4e50 !important;
+    color: #fff !important;
+    transform: scale(1.05);
 }
 
-.card-text small {
-    color: #6c757d;
-}
-
-/* Form fields */
+/* Forms */
 form textarea,
 form input[type="text"],
 form input[type="email"],
+form input[type="password"],
 form select {
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
+    background-color: #2a2a2a;
+    color: #fff;
+    border-radius: 0.6rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid #444;
+    transition: border-color 0.3s ease;
     width: 100%;
+}
+
+form textarea:focus,
+form input:focus,
+form select:focus {
+    border-color: #ff4e50;
+    box-shadow: 0 0 0 0.2rem rgba(255, 78, 80, 0.2);
+}
+
+/* Text in cards */
+.card-text,
+p {
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* Small muted text like dates, reviews */
+.card-text small,
+.text-muted,
+.review-timestamp,
+.movie-meta,
+.meta-text {
+    color: #dddddd !important;
+    font-size: 0.9rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* Movie titles */
+.card-title {
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Container fade-in */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Footer */
+footer {
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #888;
+    background-color: #1a1a1a;
+    border-top: 1px solid #333;
+}
+
+/* Anchor fix */
+a,
+.nav-link,
+.btn-link {
+    text-decoration: none !important;
+}
+
+a:hover,
+.nav-link:hover,
+.btn-link:hover {
+    text-decoration: none !important;
+    color: #ff4e50 !important;
+}
+/* Fix Logout button visibility in dark navbar */
+.navbar .btn-link.nav-link {
+    background: none !important;
+    border: none !important;
+    color: #ccc !important;
+    font-size: 1.1rem;
+    margin-left: 1rem;
+    text-decoration: none !important;
+    padding: 0;
+    box-shadow: none !important;
+}
+
+.navbar .btn-link.nav-link:hover {
+    color: #ff4e50 !important;
 }
